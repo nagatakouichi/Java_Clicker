@@ -4,15 +4,18 @@ import adder.AdderManager;
 import adder.AdderType;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NumberCountGUI {
-    private final int frameWidth = 200;
+    private final int frameWidth = 400;
     private final int frameHeight = 250;
-    private final String autoAdderFormat = "AutoAdder[Tier%1d] Own:$2d, Power:%d";
+    private final String autoAdderFormat = "AutoAdder[Tier%1d] Own:%2d, Power:%d";
     private JFrame frame;
     private JLabel numberLabel;
     private JLabel autoAddPower;
     private JLabel manualAddPower;
+    private List<JLabel> autoAdderLabelList = new ArrayList<>();
     private NumberCountThread thread;
     private AdderManager adderManager;
     public NumberCountGUI(NumberCountThread thread) {
@@ -22,6 +25,10 @@ public class NumberCountGUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(frameWidth, frameHeight);
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+
+        JLabel closeLabel = new JLabel("（このウインドウを閉じるとゲームは終了します)");
+        closeLabel.setAlignmentX(0.5f);
+        frame.add(closeLabel);
 
         JLabel label = new JLabel("現在のNumber");
         label.setAlignmentX(0.5f);
@@ -55,11 +62,11 @@ public class NumberCountGUI {
 
         for (int i = 1; i <= this.adderManager.getMaxTier(); i++) {
             long own = this.adderManager.getNumberOwned(i);
-            long power = this.adderManager.getPower(AdderType.AUTO, 1);
+            long power = this.adderManager.getPower(AdderType.AUTO, i);
             JLabel autoAdderLabel = new JLabel(String.format(autoAdderFormat, i, own, power));
-            autoAdderLabel.setAlignmentX(1f);
+            autoAdderLabel.setAlignmentX(0.5f);
+            autoAdderLabelList.add(autoAdderLabel);
             this.frame.add(autoAdderLabel);
-            //formatの修正
         }
     }
 
@@ -67,7 +74,12 @@ public class NumberCountGUI {
         numberLabel.setText(String.valueOf(thread.getNumber()));
         manualAddPower.setText(String.valueOf(manualPowerAmount));
         autoAddPower.setText(String.valueOf(autoAddPowerAmount));
-        //各AutoAdderの情報の修正
+        for (int i = 1; i <= this.autoAdderLabelList.size(); i++) {
+            long own = this.adderManager.getNumberOwned(i);
+            long power = this.adderManager.getPower(AdderType.AUTO, i);
+            JLabel autoAdderLabel = autoAdderLabelList.get(i-1);
+            autoAdderLabel.setText(String.format(autoAdderFormat, i, own, power));
+        }
     }
     public void close() {
         frame.dispose();

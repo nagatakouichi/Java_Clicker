@@ -8,7 +8,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class NumberCountThread extends Thread{
     private AtomicLong number = new AtomicLong(0);
-    public final long DESTINATION_NUMBER = 100; //目標値
     public final long updateSeconds = 1;
     private final AtomicBoolean isStopRunning = new AtomicBoolean(false);
     private NumberCountGUI numberCountGUI;
@@ -29,24 +28,16 @@ public class NumberCountThread extends Thread{
                     autoAddPowerAmount = adderManager.autoAdd();
                 }
                 numberCountGUI.update(Objects.requireNonNull(adderManager).getManualAddPower(), autoAddPowerAmount);
-                //目標値で停止
-                if (number.get() >= DESTINATION_NUMBER) {
-                    setIsStopRunning(true);
-                }
             } catch (InterruptedException e) {
                 System.out.println("待機処理エラー" + e.getMessage());
             }
         }
-        System.out.println("目標値「" + getDESTINATION_NUMBER() + "」に到達しました.");
         numberCountGUI.close();
         System.out.println("Enterで終了します");
     }
 
     public long getNumber() {
         return number.get();
-    }
-    public long getDESTINATION_NUMBER() {
-        return this.DESTINATION_NUMBER;
     }
 
     public void setAdderManager(AdderManager adderManager) {
