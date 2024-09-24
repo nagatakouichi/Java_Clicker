@@ -4,14 +4,16 @@ import adder.AdderManager;
 import adder.AdderType;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NumberCountGUI {
     private final int frameWidth = 400;
-    private final int frameHeight = 250;
+    private final int frameHeight = 300;
     private final String autoAdderFormat = "AutoAdder[Tier%1d] Own:%2d, Power:%d";
     private JFrame frame;
+    private JPanel autoAddersPanel;
     private JLabel numberLabel;
     private JLabel autoAddPower;
     private JLabel manualAddPower;
@@ -21,14 +23,7 @@ public class NumberCountGUI {
     public NumberCountGUI(NumberCountThread thread) {
         this.thread = thread;
 
-        frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(frameWidth, frameHeight);
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-
-        JLabel closeLabel = new JLabel("（このウインドウを閉じるとゲームは終了します)");
-        closeLabel.setAlignmentX(0.5f);
-        frame.add(closeLabel);
+        frame = new NumberCountWindow(frameWidth, frameHeight, this.thread);
 
         JLabel label = new JLabel("現在のNumber");
         label.setAlignmentX(0.5f);
@@ -54,6 +49,18 @@ public class NumberCountGUI {
         autoAddPower.setAlignmentX(0.5f);
         frame.add(autoAddPower);
 
+        autoAddersPanel = new JPanel();
+        autoAddersPanel.setLayout(new BoxLayout(autoAddersPanel, BoxLayout.Y_AXIS));
+        this.frame.add(autoAddersPanel);
+
+        JPanel closePanel = new JPanel();
+        closePanel.setBorder(BorderFactory.createEmptyBorder(30,10,10,10));
+        JButton closeButton = new JButton("終了");
+        closeButton.setAlignmentX(0.5f);
+        closeButton.addActionListener(e -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
+        closePanel.add(closeButton);
+        this.frame.add(closePanel);
+
         frame.setVisible(true);
     }
 
@@ -66,8 +73,9 @@ public class NumberCountGUI {
             JLabel autoAdderLabel = new JLabel(String.format(autoAdderFormat, i, own, power));
             autoAdderLabel.setAlignmentX(0.5f);
             autoAdderLabelList.add(autoAdderLabel);
-            this.frame.add(autoAdderLabel);
+            autoAddersPanel.add(autoAdderLabel);
         }
+        this.frame.validate();
     }
 
     public void update(long manualPowerAmount, long autoAddPowerAmount) {
@@ -80,8 +88,5 @@ public class NumberCountGUI {
             JLabel autoAdderLabel = autoAdderLabelList.get(i-1);
             autoAdderLabel.setText(String.format(autoAdderFormat, i, own, power));
         }
-    }
-    public void close() {
-        frame.dispose();
     }
 }

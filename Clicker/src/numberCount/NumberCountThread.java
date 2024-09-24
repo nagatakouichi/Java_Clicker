@@ -32,8 +32,7 @@ public class NumberCountThread extends Thread{
                 System.out.println("待機処理エラー" + e.getMessage());
             }
         }
-        numberCountGUI.close();
-        System.out.println("Enterで終了します");
+        System.exit(0);
     }
 
     public long getNumber() {

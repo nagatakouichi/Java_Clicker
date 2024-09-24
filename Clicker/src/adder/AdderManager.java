@@ -8,7 +8,7 @@ public class AdderManager {
     private NumberCountThread numberCountThread;
     private ManualAdder manualAdder;
     private Map<Integer, AutoAdder> autoAdderMap = new HashMap<>();
-    private final int maxTier = 3;
+    private final int maxTier = 5;
 
     public AdderManager(NumberCountThread numberCountThread) {
         this.numberCountThread = numberCountThread;
