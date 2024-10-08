@@ -12,7 +12,6 @@ public class SaveManager {
     private AdderManager adderManager;
     private NumberCountThread numberCountThread;
     private final String saveFileName = "Clicker_SaveData";
-    private final String saveFolderName = "SaveData/";
 
     public SaveManager(AdderManager adderManager, NumberCountThread numberCountThread) {
         this.adderManager = adderManager;
@@ -24,7 +23,7 @@ public class SaveManager {
 
         String objectSaveFile = saveFileName + ".dat";
         try (
-                FileOutputStream fos = new FileOutputStream(saveFolderName + objectSaveFile);
+                FileOutputStream fos = new FileOutputStream(objectSaveFile);
                 ObjectOutputStream oos = new ObjectOutputStream(fos)){
             oos.writeObject(saveData);
             oos.flush();
@@ -37,7 +36,7 @@ public class SaveManager {
         SaveData saveData = null;
 
         try (
-                FileInputStream fis = new FileInputStream(saveFolderName + saveFileName + ".dat");
+                FileInputStream fis = new FileInputStream(saveFileName + ".dat");
                 ObjectInputStream ois = new ObjectInputStream(fis);)
         {
             Object obj = ois.readObject();
@@ -53,7 +52,7 @@ public class SaveManager {
     }
 
     public void deleteSave() {
-        Path path = Paths.get(saveFolderName + saveFileName + ".dat");
+        Path path = Paths.get(saveFileName + ".dat");
         try {
             Files.deleteIfExists(path);
         } catch (IOException e) {
