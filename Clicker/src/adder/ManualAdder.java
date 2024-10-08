@@ -21,6 +21,6 @@ public class ManualAdder extends Adder{
 
     @Override
     public long getPowerUpPrice() {
-        return this.basePowerUpPrice * ((long) Math.pow(2, this.numberOfPowerUp));
+        return this.basePowerUpPrice * ((long) Math.pow(2, this.numberOfPowerUp) * (10 + 2 * this.numberOfPowerUp));
     }
 }

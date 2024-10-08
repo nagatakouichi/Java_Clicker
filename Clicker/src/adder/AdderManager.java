@@ -26,16 +26,31 @@ public class AdderManager {
     public void buyAdder(AdderType type, int tier) {
         if (type == AdderType.AUTO) {
             AutoAdder autoAdder = this.autoAdderMap.get(tier);
-            autoAdder.addNumberOwned(1);;
+            if (autoAdder.getOwnPrice() > numberCountThread.getNumber()) {
+                System.out.println("Number不足で購入できません。");
+            } else {
+                numberCountThread.decreaseNumber(autoAdder.getOwnPrice());
+                autoAdder.addNumberOwned(1);;
+            }
         }
     }
 
     public void buyPowerUp(AdderType type, int tier) {
         if (type == AdderType.MANUAL) {
-            manualAdder.buyPowerUp(1);
+            if (manualAdder.getPowerUpPrice() > numberCountThread.getNumber()) {
+                System.out.println("Number不足で購入できません。");
+            } else {
+                numberCountThread.decreaseNumber(manualAdder.getPowerUpPrice());
+                manualAdder.buyPowerUp(1);
+            }
         } else if (type == AdderType.AUTO) {
             AutoAdder autoAdder = this.autoAdderMap.get(tier);
-            autoAdder.buyPowerUp(1);
+            if (autoAdder.getPowerUpPrice() > numberCountThread.getNumber()) {
+                System.out.println("Number不足で購入できません。");
+            } else {
+                numberCountThread.decreaseNumber(autoAdder.getPowerUpPrice());
+                autoAdder.buyPowerUp(1);
+            }
         }
     }
 
