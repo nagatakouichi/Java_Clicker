@@ -8,10 +8,10 @@ public class AutoAdder extends Adder{
     private int tier;
 
     public AutoAdder(NumberCountThread numberCountThread, int tier) {
-        super(numberCountThread, (long) Math.pow(100, tier - 1), (long) Math.pow(100, tier - 1) * 50);
+        super(numberCountThread, (long) Math.pow(100, tier - 1), (long) Math.pow(100, tier - 1) * 5000);
         this.tier = tier;
         this.numberOwned = 0;
-        this.baseOwnPrice = (long) Math.pow(100, tier - 1) * 10;
+        this.baseOwnPrice = (long) Math.pow(100, tier - 1) * 100;
     }
 
     public void setNumberOwned(long numberOwned) {

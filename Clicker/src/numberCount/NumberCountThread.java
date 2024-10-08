@@ -18,7 +18,11 @@ public class NumberCountThread extends Thread{
     private SaveManager saveManager;
 
     public NumberCountThread() {
-        this.numberCountGUI = new NumberCountGUI(this);
+        this.adderManager = new AdderManager(this);
+        this.numberCountGUI = new NumberCountGUI(this, this.adderManager);
+        this.saveManager = new SaveManager(this.adderManager, this);
+
+        this.loadSaveData();
     }
 
     @Override
@@ -63,14 +67,6 @@ public class NumberCountThread extends Thread{
 
     public long getNumber() {
         return number.get();
-    }
-
-    public void setAdderManager(AdderManager adderManager) {
-        this.adderManager = adderManager;
-        this.numberCountGUI.addAutoAdderGUI(this.adderManager);
-        this.saveManager = new SaveManager(this.adderManager, this);
-
-        this.loadSaveData();
     }
 
     public void setIsStopRunning(boolean isStop) {

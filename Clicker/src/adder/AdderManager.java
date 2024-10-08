@@ -19,8 +19,6 @@ public class AdderManager {
         for (int i = 1; i <= maxTier; i++) {
             autoAdderMap.put(i, new AutoAdder(this.numberCountThread, i));
         }
-
-        this.numberCountThread.setAdderManager(this);
     }
 
     public void buyAdder(AdderType type, int tier) {

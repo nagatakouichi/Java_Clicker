@@ -6,7 +6,6 @@ import numberCount.NumberCountThread;
 public class Main {
     public static void main(String[] args) {
         NumberCountThread numberCountThread = new NumberCountThread();
-        AdderManager adderManager = new AdderManager(numberCountThread);
 
         numberCountThread.start();
 
