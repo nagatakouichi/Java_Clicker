@@ -2,6 +2,7 @@ package numberCount;
 
 import adder.AdderManager;
 import adder.AdderType;
+import gui.SaveDeleteWindow;
 
 import javax.swing.*;
 import java.awt.event.WindowEvent;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class NumberCountGUI {
     private final int frameWidth = 400;
-    private final int frameHeight = 300;
+    private final int frameHeight = 400;
     private final String autoAdderFormat = "AutoAdder[Tier%1d] Own:%2d, Power:%d";
     private JFrame frame;
     private JPanel autoAddersPanel;
@@ -60,6 +61,14 @@ public class NumberCountGUI {
         closeButton.addActionListener(e -> frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)));
         closePanel.add(closeButton);
         this.frame.add(closePanel);
+
+        JPanel saveDeletePanel = new JPanel();
+        saveDeletePanel.setBorder(BorderFactory.createEmptyBorder(30,10,10,10));
+        JButton saveDeleteButton = new JButton("セーブデータ消去");
+        saveDeleteButton.setAlignmentX(0.5f);
+        saveDeleteButton.addActionListener(e -> new SaveDeleteWindow(thread));
+        saveDeletePanel.add(saveDeleteButton);
+        this.frame.add(saveDeletePanel);
 
         frame.setVisible(true);
     }

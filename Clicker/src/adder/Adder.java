@@ -3,25 +3,28 @@ package adder;
 import numberCount.NumberCountThread;
 
 abstract class Adder {
-    long power;
-    long powerUpPrice;
+    long basePower;
+    long basePowerUpPrice;
+    long numberOfPowerUp = 0;
     NumberCountThread numberCountThread;
 
-    public Adder(NumberCountThread numberCountThread, long power, long powerUpPrice) {
+    public Adder(NumberCountThread numberCountThread, long basePower, long basePowerUpPrice) {
         this.numberCountThread = numberCountThread;
-        this.power = power;
-        this.powerUpPrice = powerUpPrice;
+        this.basePower = basePower;
+        this.basePowerUpPrice = basePowerUpPrice;
     }
 
-    public long getPowerUpPrice() {
-        return powerUpPrice;
+    public void buyPowerUp(long buyNum) {
+        this.numberOfPowerUp += buyNum;
     }
 
-    public long getPower() {
-        return power;
+    public long getNumberOfPowerUp() { return this.numberOfPowerUp; }
+
+    public void setNumberOfPowerUp(long numberOfPowerUp) {
+        this.numberOfPowerUp = numberOfPowerUp;
     }
 
     public abstract long add();
-    public abstract void powerUp();
-    public abstract void increasePowerUpPrice();
+    public abstract long getPower();
+    public abstract long getPowerUpPrice();
 }
