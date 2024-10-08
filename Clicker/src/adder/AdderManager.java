@@ -1,6 +1,8 @@
 package adder;
 
 import numberCount.NumberCountThread;
+import save.SaveData;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,26 +19,36 @@ public class AdderManager {
         for (int i = 1; i <= maxTier; i++) {
             autoAdderMap.put(i, new AutoAdder(this.numberCountThread, i));
         }
-
-        this.numberCountThread.setAdderManager(this);
     }
 
     public void buyAdder(AdderType type, int tier) {
         if (type == AdderType.AUTO) {
             AutoAdder autoAdder = this.autoAdderMap.get(tier);
-            autoAdder.addNumberOwned();;
-            autoAdder.increaseOwnPrice();
+            if (autoAdder.getOwnPrice() > numberCountThread.getNumber()) {
+                System.out.println("Number不足で購入できません。");
+            } else {
+                numberCountThread.decreaseNumber(autoAdder.getOwnPrice());
+                autoAdder.addNumberOwned(1);;
+            }
         }
     }
 
     public void buyPowerUp(AdderType type, int tier) {
         if (type == AdderType.MANUAL) {
-            manualAdder.powerUp();
-            manualAdder.increasePowerUpPrice();
+            if (manualAdder.getPowerUpPrice() > numberCountThread.getNumber()) {
+                System.out.println("Number不足で購入できません。");
+            } else {
+                numberCountThread.decreaseNumber(manualAdder.getPowerUpPrice());
+                manualAdder.buyPowerUp(1);
+            }
         } else if (type == AdderType.AUTO) {
             AutoAdder autoAdder = this.autoAdderMap.get(tier);
-            autoAdder.powerUp();
-            autoAdder.increasePowerUpPrice();
+            if (autoAdder.getPowerUpPrice() > numberCountThread.getNumber()) {
+                System.out.println("Number不足で購入できません。");
+            } else {
+                numberCountThread.decreaseNumber(autoAdder.getPowerUpPrice());
+                autoAdder.buyPowerUp(1);
+            }
         }
     }
 
@@ -45,6 +57,15 @@ public class AdderManager {
             return manualAdder.getPowerUpPrice();
         } else if (type == AdderType.AUTO) {
             return this.autoAdderMap.get(tier).getPowerUpPrice();
+        }
+        return 0;
+    }
+
+    public long getNumberOfPowerUp(AdderType type, int tier) {
+        if (type == AdderType.MANUAL) {
+            return  manualAdder.getNumberOfPowerUp();
+        } else if (type == AdderType.AUTO) {
+            return this.autoAdderMap.get(tier).getNumberOfPowerUp();
         }
         return 0;
     }
@@ -89,5 +110,14 @@ public class AdderManager {
 
     public int getMaxTier() {
         return this.maxTier;
+    }
+
+    public void loadSaveData(SaveData saveData) {
+        manualAdder.setNumberOfPowerUp(saveData.getNumberOfPowerUp(AdderType.MANUAL, 0));
+        for (int i = 1; i <= this.maxTier ; i++) {
+            AutoAdder autoAdder = this.autoAdderMap.get(i);
+            autoAdder.setNumberOfPowerUp(saveData.getNumberOfPowerUp(AdderType.AUTO, i));
+            autoAdder.setNumberOwned(saveData.getNumberOwned(i));
+        }
     }
 }

@@ -4,31 +4,39 @@ import numberCount.NumberCountThread;
 
 public class AutoAdder extends Adder{
     private long numberOwned;
-    private long ownPrice;
-    private long increaseRatio;
+    private double baseOwnPrice;
     private int tier;
 
     public AutoAdder(NumberCountThread numberCountThread, int tier) {
-        super(numberCountThread, (long) Math.pow(10, tier - 1), (long) (Math.pow(10, tier - 1) * 25));
+        super(numberCountThread, (long) Math.pow(100, tier - 1), (long) Math.pow(100, tier - 1) * 5000);
         this.tier = tier;
         this.numberOwned = 0;
-        this.ownPrice = (long) Math.pow(10, tier - 1) * 5;
-        this.increaseRatio = tier + 1;
+        this.baseOwnPrice = (long) Math.pow(100, tier - 1) * 100;
+    }
+
+    public void setNumberOwned(long numberOwned) {
+        this.numberOwned = numberOwned;
     }
 
     @Override
     public long add() {
-        long addAmount = this.power * this.numberOwned;
+        long addAmount = this.getPower() * this.numberOwned;
         numberCountThread.addNumber(addAmount);
         return addAmount;
     }
 
-    public void addNumberOwned() {
-        this.numberOwned += 1;
+    @Override
+    public long getPower() {
+        return this.basePower * ((long) Math.pow(this.tier + 1, this.numberOfPowerUp));
+    }
+
+    public void addNumberOwned(long num) {
+        this.numberOwned += num;
     }
 
     public long getOwnPrice() {
-        return this.ownPrice;
+        double ownPrice = this.baseOwnPrice * (Math.pow(1.1, this.numberOwned));
+        return (long) ownPrice;
     }
 
     public long getNumberOwned() {
@@ -36,16 +44,7 @@ public class AutoAdder extends Adder{
     }
 
     @Override
-    public void powerUp() {
-        this.power *= this.increaseRatio;
-    }
-
-    @Override
-    public void increasePowerUpPrice() {
-        this.powerUpPrice *= this.increaseRatio;
-    }
-
-    public void increaseOwnPrice() {
-        this.ownPrice *= this.increaseRatio;
+    public long getPowerUpPrice() {
+        return this.basePowerUpPrice * ((long) Math.pow(tier + 1, this.numberOfPowerUp));
     }
 }

@@ -9,17 +9,18 @@ public class ManualAdder extends Adder{
     }
 
     public long add(){
+        long power = this.getPower();
         numberCountThread.addNumber(power);
         return power;
     }
 
     @Override
-    public void powerUp() {
-        power = power * 2;
+    public long getPower() {
+        return this.basePower * ((long) Math.pow(2, this.numberOfPowerUp));
     }
 
     @Override
-    public void increasePowerUpPrice() {
-        this.powerUpPrice *= 2;
+    public long getPowerUpPrice() {
+        return this.basePowerUpPrice * ((long) Math.pow(2, this.numberOfPowerUp) * (10 + 2 * this.numberOfPowerUp));
     }
 }
