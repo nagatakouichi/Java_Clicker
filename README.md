@@ -11,25 +11,29 @@ Clickerはクリッカーゲームを遊べるプログラムです。
 # 機能概要
 
 1.「Number」を増やしていくことが目的のゲームです。  
-2.コマンドラインに「add」と入力すると、「Number」が1増えます。  
-![2](https://github.com/user-attachments/assets/7321330d-9f21-44ce-8a4e-2ffbb53879e8)
-
-3.コマンドラインに「buy」と入力すると、パワーアップアイテムの一覧が表示されます。  
-![3](https://github.com/user-attachments/assets/0e8e0154-47aa-46a4-beb1-9b6a96573d96)
+2.起動するとウインドウが表示されます。ウインドウで操作と各種数値の確認が出来ます。
+3.「add」をクリックすると、「Number」が1増えます。  
+![2-2](https://github.com/user-attachments/assets/313c2607-0e4c-4309-858e-a8186d6990a5)  
 
 4.「Number」を消費することでパワーアップアイテムが購入できます。  
-5.パワーアップアイテム一覧表示後にコマンドラインに買いたいアイテムの番号を入力することで、アイテムを購入できます。  
-6.「MANUALAdder」の「POWERUP」を購入すると「add」と入力したときの「Number」の増加量が増えます。  
-7.「AUTOAdder」は入力せずとも自動で「Number」を増やしてくれるアイテムです。  
-8.「AUTOAdder」には「Tier」があり、「Tier」が高いほど強力です。  
-9.「AUTOAdder」の「OWN」を購入すると「AUTOAdder」の数が１つ増えます。  
-10.「AUTOAdder」の「POWERUP」を購入すると、「AUTOAdder」１つ当たりの「Number」増加量が増えます。  
-11.パワーアップアイテムは購入するほど、高くなっていきます。  
-12.「現在のManual Add Power」には、「add」を入力したときの「Number」増加量が表示されます。  
-![12](https://github.com/user-attachments/assets/938f9836-2fa2-4ddf-99df-2fa6f4328223)
+5.ウインドウ上の「PowerUp」をクリックすることでパワーアップアイテムを購入できます。  
+![powerup](https://github.com/user-attachments/assets/2af1e5f4-4763-4826-bdc3-3ccc29554a3a)
 
+
+6.「ManualAdder」の「PowerUp」を購入すると「add」をクリックしたときの「Number」の増加量が増えます。  
+7.「AutoAdder」は入力せずとも自動で「Number」を増やしてくれるアイテムです。「Number」を消費して購入する必要があります。   
+8.「AutoAdder」には「Tier」があり、「Tier」が高いほど強力です。  
+9.「AutoAdder」の「Own」をクリックすると「AUTOAdder」の数が１つ増えます。  
+![own](https://github.com/user-attachments/assets/bb90a85f-d782-4f6c-8ba2-3cb9c8d18b2b)
+
+
+10.「AutoAdder」の「PowerUp」を購入すると、「AutoAdder」１つ当たりの「Number」増加量が増えます。  
+11.パワーアップアイテムとAutoAdderは購入するほど、高くなっていきます。  
+12.「現在のManual Add Power」には、「add」を入力したときの「Number」増加量が表示されます。  
 13.「現在のAuto Add Power」には、毎秒自動で増加していく「Number」の量が表示されます。  
-14.「Number」などを表示しているウインドウを閉じるとゲームは終了します。  
+14.「終了」ボタンか「×」ボタンを押すと、自動でセーブされ、ゲームは終了します。  
+15.次にゲームを開始するときは、自動で前回のセーブデータを読み込みます。  
+16.「セーブデータ消去」ボタンを押した後、出てくるウインドウで「はい」を選ぶとセーブデータを消去出来ます。  
 
 # 起動方法
 
